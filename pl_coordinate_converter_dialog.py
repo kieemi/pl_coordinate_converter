@@ -63,17 +63,17 @@ class PlcoordconverterDialog(QtWidgets.QDialog, FORM_CLASS):
         self.spbLngDD.editingFinished.connect(self.lngDDtoDMS)
 #TODO check connections, either remove unnescesary, or add missing connections
 # setting coordinates from geographical to polish specific
-        self.spbLatDD.editingFinished.connect(self.ddToCrs_1)
-        self.spbLngDD.editingFinished.connect(self.ddToCrs_1)
-        self.spbLatD.valueChanged.connect(self.ddToCrs_1)
-        self.spbLatM.valueChanged.connect(self.ddToCrs_1)
-        self.dbspLatS.valueChanged.connect(self.ddToCrs_1)
-        self.spbLngD.valueChanged.connect(self.ddToCrs_1)
-        self.spbLngM.valueChanged.connect(self.ddToCrs_1)
-        self.dbspLngS.valueChanged.connect(self.ddToCrs_1)
+        self.spbLatDD.editingFinished.connect(self.ddToPl)
+        self.spbLngDD.editingFinished.connect(self.ddToPl)
+        self.spbLatD.valueChanged.connect(self.ddToPl)
+        self.spbLatM.valueChanged.connect(self.ddToPl)
+        self.dbspLatS.valueChanged.connect(self.ddToPl)
+        self.spbLngD.valueChanged.connect(self.ddToPl)
+        self.spbLngM.valueChanged.connect(self.ddToPl)
+        self.dbspLngS.valueChanged.connect(self.ddToPl)
 
-        self.dbspYCoord.valueChanged.connect(self.ddToCrs_2)
-        self.dbspXCoord.valueChanged.connect(self.ddToCrs_2)
+        self.dbspYCoord.valueChanged.connect(self.plToPl)
+        self.dbspXCoord.valueChanged.connect(self.plToPl)
 
 # decimal data in DM won't change untill editing in related boxes will be changed
         self.spbLatD.valueChanged.connect(self.latDDtoDM)
@@ -87,13 +87,13 @@ class PlcoordconverterDialog(QtWidgets.QDialog, FORM_CLASS):
         self.spbLngDD.editingFinished.connect(self.lngDDtoDM)
 
 # button for adding points from coordinates
-        self.addTmpPoint.clicked.connect(self.addTempPtLyr)
+        self.addTmpPointWGS.clicked.connect(self.addTempPtLyr)
 
-        self.cmbPLCrs1.currentTextChanged.connect(self.ddToCrs_1)
-        self.cmbPLCrs1.currentTextChanged.connect(self.ddToCrs_1)
+        self.cmbPLCrs1.currentTextChanged.connect(self.ddToPl)
+        self.cmbPLCrs1.currentTextChanged.connect(self.ddToPl)
 
-        self.cmbPLCrs2.currentTextChanged.connect(self.ddToCrs_2)
-        self.cmbPLCrs2.currentTextChanged.connect(self.ddToCrs_2)
+        self.cmbPLCrs2.currentTextChanged.connect(self.plToPl)
+        self.cmbPLCrs2.currentTextChanged.connect(self.plToPl)
     
     def latDMStoDD(self):
         iDeg = self.spbLatD.value()
@@ -191,25 +191,28 @@ class PlcoordconverterDialog(QtWidgets.QDialog, FORM_CLASS):
         return epsg
 
     # setting coordinates from geographical to polish specific
-    #TODO merge functions below into one
-    def ddToCrs_1(self):
+    def ddToPl(self):
         geom = QgsGeometry(QgsPoint(self.spbLngDD.value(), self.spbLatDD.value()))
         sourceCrs = QgsCoordinateReferenceSystem('EPSG:4326')
         destCrs = QgsCoordinateReferenceSystem(self.setCrs(self.cmbPLCrs1.currentText()))
-        tr = QgsCoordinateTransform(sourceCrs, destCrs, QgsProject.instance()) 
-        geom.transform(tr)  
+        self.coord_transform(geom, sourceCrs, destCrs)
         self.dbspXCoord.setValue(geom.asPoint().y())
         self.dbspYCoord.setValue(geom.asPoint().x())
-
-    def ddToCrs_2(self):
+        
+    # setting coordinates from geographical to polish specific
+    def plToPl(self):
         geom = QgsGeometry(QgsPoint(self.dbspYCoord.value(), self.dbspXCoord.value()))
         sourceCrs = QgsCoordinateReferenceSystem(self.setCrs(self.cmbPLCrs1.currentText()))
         destCrs = QgsCoordinateReferenceSystem(self.setCrs(self.cmbPLCrs2.currentText()))
-        tr = QgsCoordinateTransform(sourceCrs, destCrs, QgsProject.instance()) 
-        geom.transform(tr)  
+        self.coord_transform(geom, sourceCrs, destCrs)
         self.dbspXCoord_2.setValue(geom.asPoint().y())
         self.dbspYCoord_2.setValue(geom.asPoint().x())
-    
+
+    #ftransforming coordinates between CRS
+    def coord_transform(self, geom, sourceCrs, destCrs):
+        tr = QgsCoordinateTransform(sourceCrs, destCrs, QgsProject.instance()) 
+        geom.transform(tr)
+
     #adding temporary point layer from coordinates
     def addTempPtLyr(self):
         #adding temp point layer

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>633</width>
-    <height>493</height>
+    <width>735</width>
+    <height>438</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QDoubleSpinBox" name="spbLngDM_M">
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>260</x>
      <y>190</y>
      <width>91</width>
      <height>31</height>
@@ -38,23 +38,34 @@
     <double>0.000000000000000</double>
    </property>
   </widget>
-  <widget class="QPushButton" name="addTmpPoint">
+  <widget class="QPushButton" name="addTmpPointWGS">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>430</y>
-     <width>351</width>
-     <height>28</height>
+     <x>550</x>
+     <y>80</y>
+     <width>121</width>
+     <height>141</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>7</pointsize>
+    </font>
+   </property>
    <property name="text">
-    <string>Dodaj współrzędne jako tymczasową warstwę punktową</string>
+    <string>Dodaj współrzędne
+jako tymczasową
+warstwę punktową
+w układzie
+współrzędnych
+geografinczych
+(WGS84)</string>
    </property>
   </widget>
   <widget class="QSpinBox" name="spbLngDM_D">
    <property name="geometry">
     <rect>
-     <x>230</x>
+     <x>210</x>
      <y>190</y>
      <width>51</width>
      <height>31</height>
@@ -73,7 +84,7 @@
   <widget class="QSpinBox" name="spbLatM">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>70</x>
      <y>80</y>
      <width>51</width>
      <height>31</height>
@@ -95,7 +106,7 @@
   <widget class="QDoubleSpinBox" name="spbLatDD">
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>370</x>
      <y>80</y>
      <width>91</width>
      <height>31</height>
@@ -139,7 +150,7 @@
   <widget class="QComboBox" name="cmbLngH">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>470</x>
      <y>190</y>
      <width>71</width>
      <height>31</height>
@@ -178,7 +189,7 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>9</pointsize>
+     <pointsize>8</pointsize>
     </font>
    </property>
    <property name="text">
@@ -197,7 +208,7 @@ i sekundach</string>
    </property>
    <property name="font">
     <font>
-     <pointsize>9</pointsize>
+     <pointsize>8</pointsize>
     </font>
    </property>
    <property name="text">
@@ -215,7 +226,7 @@ i sekundach</string>
    </property>
    <property name="font">
     <font>
-     <pointsize>9</pointsize>
+     <pointsize>8</pointsize>
     </font>
    </property>
    <property name="text">
@@ -225,7 +236,7 @@ i sekundach</string>
   <widget class="QComboBox" name="cmbLatH">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>470</x>
      <y>80</y>
      <width>71</width>
      <height>31</height>
@@ -271,7 +282,7 @@ i sekundach</string>
   <widget class="QSpinBox" name="spbLatDM_D">
    <property name="geometry">
     <rect>
-     <x>230</x>
+     <x>210</x>
      <y>80</y>
      <width>51</width>
      <height>31</height>
@@ -308,33 +319,34 @@ i sekundach</string>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>370</x>
      <y>150</y>
-     <width>181</width>
-     <height>21</height>
+     <width>91</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>9</pointsize>
+     <pointsize>8</pointsize>
     </font>
    </property>
    <property name="text">
-    <string>w zapisie dziesiętnym</string>
+    <string>w zapisie
+dziesiętnym</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_8">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>40</y>
+     <x>210</x>
+     <y>30</y>
      <width>151</width>
      <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>9</pointsize>
+     <pointsize>8</pointsize>
     </font>
    </property>
    <property name="text">
@@ -368,7 +380,7 @@ i sekundach</string>
     <rect>
      <x>20</x>
      <y>370</y>
-     <width>201</width>
+     <width>181</width>
      <height>22</height>
     </rect>
    </property>
@@ -379,6 +391,9 @@ i sekundach</string>
    </property>
    <property name="currentText">
     <string>układ PL-2000 strefa V</string>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
    </property>
    <item>
     <property name="text">
@@ -431,7 +446,7 @@ i sekundach</string>
   <widget class="QLabel" name="label_9">
    <property name="geometry">
     <rect>
-     <x>230</x>
+     <x>210</x>
      <y>150</y>
      <width>151</width>
      <height>21</height>
@@ -439,7 +454,7 @@ i sekundach</string>
    </property>
    <property name="font">
     <font>
-     <pointsize>9</pointsize>
+     <pointsize>8</pointsize>
     </font>
    </property>
    <property name="text">
@@ -468,7 +483,7 @@ i sekundach</string>
   <widget class="QDoubleSpinBox" name="spbLatDM_M">
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>260</x>
      <y>80</y>
      <width>91</width>
      <height>31</height>
@@ -495,7 +510,7 @@ i sekundach</string>
     <rect>
      <x>20</x>
      <y>300</y>
-     <width>201</width>
+     <width>181</width>
      <height>22</height>
     </rect>
    </property>
@@ -533,7 +548,7 @@ i sekundach</string>
   <widget class="QDoubleSpinBox" name="dbspLatS">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>120</x>
      <y>80</y>
      <width>71</width>
      <height>31</height>
@@ -558,7 +573,7 @@ i sekundach</string>
   <widget class="QDoubleSpinBox" name="dbspLngS">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>120</x>
      <y>190</y>
      <width>71</width>
      <height>31</height>
@@ -583,7 +598,7 @@ i sekundach</string>
   <widget class="QSpinBox" name="spbLngM">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>70</x>
      <y>190</y>
      <width>51</width>
      <height>31</height>
@@ -605,7 +620,7 @@ i sekundach</string>
   <widget class="QDoubleSpinBox" name="spbLngDD">
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>370</x>
      <y>190</y>
      <width>91</width>
      <height>31</height>
@@ -692,19 +707,20 @@ i sekundach</string>
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>370</x>
      <y>40</y>
-     <width>181</width>
-     <height>21</height>
+     <width>91</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>9</pointsize>
+     <pointsize>8</pointsize>
     </font>
    </property>
    <property name="text">
-    <string>w zapisie dziesiętnym</string>
+    <string>w zapisie
+dziesiętnym</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -718,12 +734,45 @@ i sekundach</string>
    </property>
    <property name="font">
     <font>
-     <pointsize>9</pointsize>
+     <pointsize>8</pointsize>
     </font>
    </property>
    <property name="text">
     <string>w stopniach, minutach
 i sekundach</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="addTmpPointPL1">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>280</y>
+     <width>191</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>7</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Dodaj współrzędne jako tymcz.
+warstwę w tym układzie</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="addTmpPointPL1_2">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>350</y>
+     <width>191</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Dodaj współrzędne jako tymcz.
+warstwę w tym układzie</string>
    </property>
   </widget>
  </widget>
