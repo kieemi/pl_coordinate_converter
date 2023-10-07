@@ -43,59 +43,85 @@ class PlcoordconverterDialog(QtWidgets.QDialog, FORM_CLASS):
         # self.<objectname>, and you can use autoconnect slots - see
         # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
-        self.setupUi(self)
-        
-#  lines of code below automatically changes while they are written data in QDoubleSpinBox spbLatDD using latDMStoDD method
+        self.setupUi(self)    
+ 
+        #check if hemisphere needs to be changed
+        self.cmbLatH.currentTextChanged.connect(self.latDMStoDD)
+
+        #changing LatDMS value affects LatDD and LatDM
         self.spbLatD.valueChanged.connect(self.latDMStoDD)
         self.spbLatM.valueChanged.connect(self.latDMStoDD)
         self.dbspLatS.valueChanged.connect(self.latDMStoDD)
-#         check if hemisphere needs to be changed
-        self.cmbLatH.currentTextChanged.connect(self.latDMStoDD)
-
-# make the same thing for longitude
-        self.spbLngD.valueChanged.connect(self.lngDMStoDD)
-        self.spbLngM.valueChanged.connect(self.lngDMStoDD)
-        self.dbspLngS.valueChanged.connect(self.lngDMStoDD)
-        self.cmbLngH.currentTextChanged.connect(self.lngDMStoDD)
-    
-# decimal data won't change untill editing in related boxes will be changed
-        self.spbLatDD.editingFinished.connect(self.latDDtoDMS)
-        self.spbLngDD.editingFinished.connect(self.lngDDtoDMS)
-#TODO check connections, either remove unnescesary, or add missing connections
-# setting coordinates from geographical to polish specific
-        self.spbLatDD.editingFinished.connect(self.ddToPl)
-        self.spbLngDD.editingFinished.connect(self.ddToPl)
+        self.spbLatD.valueChanged.connect(self.latDMStoDM)
+        self.spbLatM.valueChanged.connect(self.latDMStoDM)
+        self.dbspLatS.valueChanged.connect(self.latDMStoDM)
+        
+        #and starts conversion to first polish CRS
         self.spbLatD.valueChanged.connect(self.ddToPl)
         self.spbLatM.valueChanged.connect(self.ddToPl)
         self.dbspLatS.valueChanged.connect(self.ddToPl)
+        self.spbLatD.valueChanged.connect(self.ddToPl)
+        self.spbLatM.valueChanged.connect(self.ddToPl)
+        self.dbspLatS.valueChanged.connect(self.ddToPl)
+
+        #changing LngDMS value affects LngDD and LngDM
+        self.spbLngD.valueChanged.connect(self.lngDMStoDD)
+        self.spbLngM.valueChanged.connect(self.lngDMStoDD)
+        self.dbspLngS.valueChanged.connect(self.lngDMStoDD)
+        self.spbLngD.valueChanged.connect(self.lngDMStoDM)
+        self.spbLngM.valueChanged.connect(self.lngDMStoDM)
+        self.dbspLngS.valueChanged.connect(self.lngDMStoDM)
+
+        #and starts conversion to first polish CRS
+        self.spbLngD.valueChanged.connect(self.ddToPl)
+        self.spbLngM.valueChanged.connect(self.ddToPl)
+        self.dbspLngS.valueChanged.connect(self.ddToPl)
         self.spbLngD.valueChanged.connect(self.ddToPl)
         self.spbLngM.valueChanged.connect(self.ddToPl)
         self.dbspLngS.valueChanged.connect(self.ddToPl)
 
-        self.dbspYCoord.valueChanged.connect(self.plToPl)
-        self.dbspXCoord.valueChanged.connect(self.plToPl)
+        #changing DM values affects DMS
+        # self.spbLatDM_D.valueChanged.connect(self.latDMtoDMS)
+        self.spbLatDM_M.editingFinished.connect(self.latDMtoDMS)
+        # self.spbLngDM_D.valueChanged.connect(self.lngDMtoDMS)
+        self.spbLngDM_M.editingFinished.connect(self.lngDMtoDMS)
+        
+        #and starts conversion to first polish CRS
+        self.spbLatDM_M.editingFinished.connect(self.ddToPl)
+        self.spbLngDM_M.editingFinished.connect(self.ddToPl)
 
-# decimal data in DM won't change untill editing in related boxes will be changed
-        self.spbLatD.valueChanged.connect(self.latDDtoDM)
-        self.spbLatM.valueChanged.connect(self.latDDtoDM)
-        self.dbspLatS.valueChanged.connect(self.latDDtoDM)
-        self.spbLatDD.editingFinished.connect(self.latDDtoDM)
+        #changing DD values affects DMS
+        self.spbLatDD.editingFinished.connect(self.latDDtoDMS)
+        self.spbLngDD.editingFinished.connect(self.lngDDtoDMS)
 
-        self.spbLngD.valueChanged.connect(self.lngDDtoDM)
-        self.spbLngM.valueChanged.connect(self.lngDDtoDM)
-        self.dbspLngS.valueChanged.connect(self.lngDDtoDM)
-        self.spbLngDD.editingFinished.connect(self.lngDDtoDM)
+        #changing DD values affects first polish coordinate system
+        self.spbLatDD.editingFinished.connect(self.ddToPl)
+        self.spbLngDD.editingFinished.connect(self.ddToPl)
 
-# button for adding points from coordinates
+        #changing first polish coordinate system values affects DD
+        self.dbspYCoord.editingFinished.connect(self.plToDD)
+        self.dbspXCoord.editingFinished.connect(self.plToDD)
+        
+        #and starts conversion to from DD to DMS
+        self.dbspYCoord.editingFinished.connect(self.lngDDtoDMS)
+        self.dbspXCoord.editingFinished.connect(self.latDDtoDMS)
+        
+        #changing values in polish coordinate system affects second polish coordinate system
+        self.dbspYCoord.valueChanged.connect(self.plToPl2)
+        self.dbspXCoord.valueChanged.connect(self.plToPl2)
+
+        # reaction for polish crs changes
+        self.cmbPLCrs1.currentTextChanged.connect(self.ddToPl)
+        self.cmbPLCrs1.currentTextChanged.connect(self.plToPl2)
+        self.cmbPLCrs2.currentTextChanged.connect(self.plToPl2)
+
+        # button for adding points from coordinates
         self.addTmpPointWGS.clicked.connect(self.addTempPtLyr)
 
-        self.cmbPLCrs1.currentTextChanged.connect(self.ddToPl)
-        self.cmbPLCrs1.currentTextChanged.connect(self.ddToPl)
-
-        self.cmbPLCrs2.currentTextChanged.connect(self.plToPl)
-        self.cmbPLCrs2.currentTextChanged.connect(self.plToPl)
-    
     def latDMStoDD(self):
+        '''
+        converting latitude from DMS to DD
+        '''
         iDeg = self.spbLatD.value()
         iMin = self.spbLatM.value()
         iSec = self.dbspLatS.value()
@@ -108,6 +134,9 @@ class PlcoordconverterDialog(QtWidgets.QDialog, FORM_CLASS):
         self.spbLatDD.setValue(dDD)
         
     def lngDMStoDD(self):
+        '''
+        converting longitude from DMS to DD
+        '''
         iDeg = self.spbLngD.value()
         iMin = self.spbLngM.value()
         iSec = self.dbspLngS.value()
@@ -119,7 +148,10 @@ class PlcoordconverterDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.spbLngDD.setValue(dDD)
     
-    def latDDtoDM(self):
+    def latDMStoDM(self):
+        '''
+        converting latitude from DMS to DM
+        '''
         iDeg = self.spbLatD.value()
         iMin = self.spbLatM.value()
         iSec = self.dbspLatS.value()
@@ -129,7 +161,10 @@ class PlcoordconverterDialog(QtWidgets.QDialog, FORM_CLASS):
         self.spbLatDM_D.setValue(iDeg)
         self.spbLatDM_M.setValue(dM)
 
-    def lngDDtoDM(self):
+    def lngDMStoDM(self):
+        '''
+        converting longitude from DMS to DM
+        '''
         iDeg = self.spbLngD.value()
         iMin = self.spbLngM.value()
         iSec = self.dbspLngS.value()
@@ -140,6 +175,9 @@ class PlcoordconverterDialog(QtWidgets.QDialog, FORM_CLASS):
         self.spbLngDM_M.setValue(dM)
 
     def latDDtoDMS(self):
+        '''
+        converting latitude from DD to DMS
+        '''
         dDD = self.spbLatDD.value()
         
         # get only degrees, by creating int from it
@@ -158,6 +196,9 @@ class PlcoordconverterDialog(QtWidgets.QDialog, FORM_CLASS):
             self.cmbLatH.setCurrentText("N")
 
     def lngDDtoDMS(self):
+        '''
+        converting longitude from DD to DMS
+        '''
         dDD = self.spbLngDD.value()
         
         # get only degrees, by creating int from it
@@ -175,8 +216,88 @@ class PlcoordconverterDialog(QtWidgets.QDialog, FORM_CLASS):
         else:
             self.cmbLngH.setCurrentText("E")    
     
-    # returning proper crs, based on given spatial referrence name
+    def latDMtoDMS(self):
+        '''
+        converting latitude from DM to DMS
+        '''
+        dDD = self.spbLatDM_D.value()
+        dMin = self.spbLatDM_M.value()
+
+        iMin = int(dMin)
+        dSec = (dMin - iMin) * 60
+
+        self.spbLatD.setValue(abs(dDD))
+        self.spbLatM.setValue(abs(iMin))
+        self.dbspLatS.setValue(abs(dSec))
+
+        if dDD < 0:
+            self.cmbLatH.setCurrentText("S")
+        else:
+            self.cmbLatH.setCurrentText("N")
+
+    def lngDMtoDMS(self):
+        '''
+        converting longitude from DM to DMS
+        '''
+        dDD = self.spbLngDM_D.value()
+        dMin = self.spbLngDM_M.value()
+
+        iMin = int(dMin)
+        dSec = (dMin - iMin) * 60
+
+        self.spbLngD.setValue(abs(dDD))
+        self.spbLngM.setValue(abs(iMin))
+        self.dbspLngS.setValue(abs(dSec))
+
+        if dDD < 0:
+            self.cmbLngH.setCurrentText("W")
+        else:
+            self.cmbLngH.setCurrentText("E")    
+
+    def ddToPl(self):
+        '''
+        converting coordinates from geographical to polish CRS
+        '''
+        geom = QgsGeometry(QgsPoint(self.spbLngDD.value(), self.spbLatDD.value()))
+        sourceCrs = QgsCoordinateReferenceSystem('EPSG:4326')
+        destCrs = QgsCoordinateReferenceSystem(self.setCrs(self.cmbPLCrs1.currentText()))
+        self.coord_transform(geom, sourceCrs, destCrs)
+        self.dbspXCoord.setValue(geom.asPoint().y())
+        self.dbspYCoord.setValue(geom.asPoint().x())
+
+    def plToDD(self):
+        '''
+        converting coordinates from polish CRS to geographical  
+        '''
+        geom = QgsGeometry(QgsPoint(self.dbspYCoord.value(), self.dbspXCoord.value()))
+        sourceCrs = QgsCoordinateReferenceSystem(self.setCrs(self.cmbPLCrs1.currentText()))
+        destCrs = QgsCoordinateReferenceSystem('EPSG:4326')
+        self.coord_transform(geom, sourceCrs, destCrs)
+        self.spbLatDD.setValue(geom.asPoint().y())
+        self.spbLngDD.setValue(geom.asPoint().x())
+        
+    def plToPl2(self):
+        '''
+        converting coordinates between polish CRSes
+        '''
+        geom = QgsGeometry(QgsPoint(self.dbspYCoord.value(), self.dbspXCoord.value()))
+        sourceCrs = QgsCoordinateReferenceSystem(self.setCrs(self.cmbPLCrs1.currentText()))
+        destCrs = QgsCoordinateReferenceSystem(self.setCrs(self.cmbPLCrs2.currentText()))
+        self.coord_transform(geom, sourceCrs, destCrs)
+        self.dbspXCoord_2.setValue(geom.asPoint().y())
+        self.dbspYCoord_2.setValue(geom.asPoint().x())
+
+    def coord_transform(self, geom, sourceCrs, destCrs):
+        '''
+        transforming coordinates between CRS
+        '''
+        tr = QgsCoordinateTransform(sourceCrs, destCrs, QgsProject.instance()) 
+        geom.transform(tr)
+
     def setCrs(self, epsg_code):
+        '''
+        returning proper crs, based on given spatial referrence name
+        '''
         epsg = 'EPSG:'
         if epsg_code == 'układ PL-1992':
             epsg += '2180'
@@ -189,41 +310,20 @@ class PlcoordconverterDialog(QtWidgets.QDialog, FORM_CLASS):
         elif epsg_code == 'układ PL-2000 strefa VIII':
             epsg += '2179'   
         return epsg
-
-    # setting coordinates from geographical to polish specific
-    def ddToPl(self):
-        geom = QgsGeometry(QgsPoint(self.spbLngDD.value(), self.spbLatDD.value()))
-        sourceCrs = QgsCoordinateReferenceSystem('EPSG:4326')
-        destCrs = QgsCoordinateReferenceSystem(self.setCrs(self.cmbPLCrs1.currentText()))
-        self.coord_transform(geom, sourceCrs, destCrs)
-        self.dbspXCoord.setValue(geom.asPoint().y())
-        self.dbspYCoord.setValue(geom.asPoint().x())
-        
-    # setting coordinates from geographical to polish specific
-    def plToPl(self):
-        geom = QgsGeometry(QgsPoint(self.dbspYCoord.value(), self.dbspXCoord.value()))
-        sourceCrs = QgsCoordinateReferenceSystem(self.setCrs(self.cmbPLCrs1.currentText()))
-        destCrs = QgsCoordinateReferenceSystem(self.setCrs(self.cmbPLCrs2.currentText()))
-        self.coord_transform(geom, sourceCrs, destCrs)
-        self.dbspXCoord_2.setValue(geom.asPoint().y())
-        self.dbspYCoord_2.setValue(geom.asPoint().x())
-
-    #ftransforming coordinates between CRS
-    def coord_transform(self, geom, sourceCrs, destCrs):
-        tr = QgsCoordinateTransform(sourceCrs, destCrs, QgsProject.instance()) 
-        geom.transform(tr)
-
-    #adding temporary point layer from coordinates
+    
     def addTempPtLyr(self):
-        #adding temp point layer
+        '''
+        adding temporary point layer from coordinates
+        '''
+        #creating temp point layer
         vl = QgsVectorLayer("Point", "punkt z kalkulatora współrzędnych", "memory")
         pr = vl.dataProvider()
-        pr.addAttributes([QgsField("X", QVariant.Double,'double',2,10)])
-        pr.addAttributes([QgsField("Y", QVariant.Double,'double',2,10)])
+        pr.addAttributes([QgsField("X", QVariant.Double,'double',2,6)])
+        pr.addAttributes([QgsField("Y", QVariant.Double,'double',2,6)])
         vl.updateFields() 
         QgsProject.instance().addMapLayer(vl)
 
-        #adding point to it
+        #adding point to that layer
         f = QgsFeature()
         f.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(self.spbLngDD.value(), self.spbLatDD.value())))
         f.setAttributes([self.spbLngDD.value(), self.spbLatDD.value()])
